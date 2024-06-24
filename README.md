@@ -1,15 +1,4 @@
-
-# Projeto Python
-
-  
-
-Este projeto é um exemplo de como configurar e executar um arquivo Python (`main.py`) utilizando um ambiente virtual (`virtualenv`). A seguir estão as instruções detalhadas para configuração do ambiente e execução do script.
-
-  
-
 ## Pré-requisitos
-
-  
 
 - Python 3.6+ instalado. Você pode verificar a versão do Python instalada executando:
 
