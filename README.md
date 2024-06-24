@@ -1,6 +1,6 @@
-## Pré-requisitos
+# Pré-requisitos
 
-- Python 3.6+ instalado. Você pode verificar a versão do Python instalada executando:
+- Python 3.10+ instalado. Você pode verificar a versão do Python instalada executando:
 
 ```sh
 python --version
