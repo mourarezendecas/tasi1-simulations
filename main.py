@@ -35,10 +35,31 @@ def gerenciar_comportas(env, profundidade):
             print(f'Comporta {i + 1} falhou ao fechar. Notificando manutenção.')
             ACOES.append((env.now, profundidade, f"falha-comporta-{i + 1}"))
             yield env.process(manutencao(env, i + 1, profundidade))
+            yield env.process(ativacao_bomba(env, profundidade))
         else:
             ACOES.append((env.now, profundidade, f"comporta-{i + 1}-fechada"))
             print(f'Comporta {i + 1} fechada com sucesso.')
         yield env.timeout(0)
+
+def ativacao_bomba(env, profundidade):
+    """Simula a ativação das bombas d'água e verifica falhas."""
+    print(f'Iniciando ativação da casa de bombas.')
+    sucesso = random.random() < TAXA_SUCESSO
+    if not sucesso:
+        print(f'Casa de bombas falhou ao ativar. Notificando manutenção.')
+        ACOES.append((env.now, profundidade, f"falha-bomba"))
+        yield env.process(manutencao_casa_de_bombas(env, profundidade))
+    else:
+        ACOES.append((env.now, profundidade, f"casa-de-bombas-ativada"))
+        print(f'Casa de bombas ativada com sucesso.')
+    yield env.timeout(1)
+
+def manutencao_casa_de_bombas(env, profundidade):
+    """Simula a manutenção e correção de uma casa de bombas."""
+    print(f'Iniciando manutenção da casa de bombas.')
+    ACOES.append((env.now, profundidade, f"manutencao-casa-bomba"))
+    yield env.timeout(1)
+    print(f'Manutenção da casa de bombas concluída. Comporta funcionando corretamente.')
 
 def manutencao(env, comporta_id, profundidade):
     """Simula a manutenção e correção de uma comporta."""
@@ -52,9 +73,9 @@ def simular(env):
     for _ in range(NUM_EXECUCOES):
         print(f'Execução - #{int(_)+1}')
         profundidade = leitor_profundidade()
+        yield env.process(central(env, profundidade))
         TEMPOS_PLOT.append(env.now)
         PROFUNDIDADES_PLOT.append(profundidade)
-        yield env.process(central(env, profundidade))
         yield env.timeout(INTERVALO_LEITURA)
 
 # Criação do ambiente de simulação
