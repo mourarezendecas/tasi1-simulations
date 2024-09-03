@@ -37,7 +37,7 @@ Para ativar o ambiente virtual, use o comando apropriado para o seu sistema oper
 
 **Windows:** 
 ```sh
-.\venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
 ```
 **Linux/MacOS**
 ```sh
